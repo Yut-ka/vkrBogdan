@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, jsonify
 from werkzeug.utils import secure_filename
 import os
+from deepface import DeepFace
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -66,6 +67,68 @@ def upload_file():
         file.save(os.path.join(UPLOAD_FOLDER, filename))
         return 'OK', 200
     return 'No file', 400
+
+
+@app.route('/results')
+def results():
+    chosen = request.args.get('chosen')  # путь к выбранному фото
+    all_files = os.listdir(UPLOAD_FOLDER)
+    photos = [f for f in all_files if f != chosen and f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+    return render_template('results.html', chosen=chosen, photos=photos)
+
+
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    chosen_filename = request.json.get('chosen')
+    if not chosen_filename:
+        return jsonify({'error': 'No chosen image provided'}), 400
+
+    chosen_path = os.path.join(UPLOAD_FOLDER, chosen_filename)
+    if not os.path.exists(chosen_path):
+        return jsonify({'error': 'Chosen image not found'}), 404
+
+    all_files = os.listdir(UPLOAD_FOLDER)
+    other_files = [f for f in all_files if f != chosen_filename and f.lower().endswith(('.jpg', '.jpeg', '.png'))]
+
+    results = []
+    for file in other_files:
+        try:
+            file_path = os.path.join(UPLOAD_FOLDER, file)
+
+            # Сравнение лиц
+            comparison = DeepFace.verify(
+                img1_path=chosen_path,
+                img2_path=file_path,
+                model_name='Facenet',
+                distance_metric='cosine',
+                enforce_detection=False
+            )
+            similarity = (1 - comparison['distance']) * 100
+
+            # Анализ атрибутов: возраст, пол, раса
+            analysis = DeepFace.analyze(
+                img_path=file_path,
+                actions=['age', 'gender', 'race'],
+                enforce_detection=False
+            )[0]  # берём первый результат
+
+            results.append({
+                'filename': file,
+                'distance': comparison['distance'],
+                'similarity': round(similarity, 2),
+                'verified': comparison['verified'],
+                'age': analysis['age'],
+                'gender': analysis['gender'],
+                'dominant_race': analysis['dominant_race']
+            })
+
+        except Exception as e:
+            results.append({
+                'filename': file,
+                'error': str(e)
+            })
+
+    return jsonify({'results': results})
 
 if __name__ == "__main__":
     app.run(debug=True)

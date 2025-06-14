@@ -36,7 +36,10 @@ $('#file-input').on('change', function () {
       const reader = new FileReader();
       reader.onload = function (e) {
         const dataUrl = e.target.result;
-        collectedThumbnails.push(dataUrl);
+        collectedThumbnails.push({
+            dataUrl: e.target.result,
+            filename: files[i].name
+        });
         jQuery('#thumbnailPreview').append(`<img src="${dataUrl}" alt="img${i}"/>`);
       };
       reader.readAsDataURL(files[i]);
@@ -72,7 +75,7 @@ $('#file-input').on('change', function () {
           updateProgress(percent);
           setTimeout(() => {
             uploadNext();
-          }, 2000);
+          }, 500);
         }
       });
     }
@@ -105,7 +108,7 @@ function showFaceSelectionPopup(thumbnails) {
   $grid.empty();
 
   thumbnails.forEach((src, index) => {
-    const $img = $('<img>').attr('src', src).attr('data-index', index);
+    const $img = $('<img>').attr('src', src.dataUrl).attr('data-filename', src.filename).attr('data-index', index);
     $grid.append($img);
   });
 
@@ -118,8 +121,33 @@ function showFaceSelectionPopup(thumbnails) {
 
   // Кнопка поиска
   $('#goToSearchBtn').on('click', function () {
-    const selectedIndex = $('#faceGrid img.selected').data('index');
-    alert(`Вы выбрали лицо под индексом: ${selectedIndex}`);
-    // можно отправить на сервер: $.post('/select-face', { index: selectedIndex })
-  });
+    const selected = $('#faceGrid img.selected');
+    if (!selected.length) return;
+
+    const selectedSrc = selected.attr('src');
+    const selectedFilename = selected.attr('data-filename');
+
+    // Закрываем выбор лица, открываем анализ
+    $('#selectFacePopup').fadeOut();
+    $('#analyzeFacePopup').fadeIn();
+    $('#popupOverlay').fadeIn();
+     // Отображение миниатюры + СОХРАНЕНИЕ имени в DOM
+    $('#analyzePreview')
+        .attr('src', selectedSrc)
+        .attr('data-filename', selectedFilename);
+    });
 }
+
+
+$('#startAnalysisBtn').on('click', function () {
+  const filename = $('#analyzePreview').attr('data-filename');
+  if (!filename) {
+    alert("Не удалось получить имя файла");
+    return;
+  }
+  window.location.href = `/results?chosen=${filename}`;
+});
+
+$('.toggle-option').on('click', function () {
+  $(this).toggleClass('active');
+});

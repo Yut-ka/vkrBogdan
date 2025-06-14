@@ -363,8 +363,30 @@
 <div id="selectFacePopup" style="display: none;">
   <h3>Выберите свое лицо</h3>
   <div class="face-grid" id="faceGrid"></div>
-  <p style="text-align: left;margin: 20px 0;font-size: 90%;">Выберите фотографию своего лица, чтобы продолжить поиск</p>
+  <p style="text-align: left;margin: 20px 0;font-size: 90%;">Выберите фотографию своего лица, чтобы продолжить анализ</p>
   <button id="goToSearchBtn" disabled>Перейти к анализу лиц</button>
+</div>
+<!-- Popup добавление анализа -->
+<div id="analyzeFacePopup" style="display: none;">
+  <h3>Анализ лиц</h3>
+  <div class="analyze-grid">
+    <img id="analyzePreview" src="" alt="chosen face">
+    <div class="add-more">
+      <div class="plus">+</div>
+      <div class="add-text">Добавьте больше фотографий<br>для лучших результатов</div>
+    </div>
+  </div>
+
+  <div class="toggle-option toggle" data-value="race">
+    <div data-v-7d4d1855="" class="slide"><div data-v-7d4d1855="" class="ball"></div></div>
+    <span>Анализировать расу</span>
+  </div>
+  <div class="toggle-option toggle" data-value="gender">
+    <div data-v-7d4d1855="" class="slide"><div data-v-7d4d1855="" class="ball"></div></div>
+    <span>Анализировать пол и возраст</span>
+  </div>
+
+  <button id="startAnalysisBtn">НАЧАТЬ</button>
 </div>
 <!-- CSS стили -->
 <style>
@@ -466,6 +488,101 @@
     font-weight: 600;
     margin-bottom: 20px;
   }
+
+
+
+
+  #analyzeFacePopup {
+  position: fixed;
+  top: 22%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 450px;
+    padding: 30px;
+    background: white;
+    z-index: 9999;
+    text-align: center;
+    min-width: 300px;
+    min-height: 150px;
+    max-width: 1050px;
+    max-height: 75vh;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    box-shadow: 3px 3px #000;
+}
+.analyze-grid {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.analyze-grid img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.add-more {
+  flex: 1;
+  border: 2px dashed #a5b8da;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #0066ff;
+  font-size: 14px;
+  padding: 10px;
+}
+.add-more .plus {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.toggle-option {
+    background: #e0eafc;
+    color: #333;
+    padding: 2px;
+    margin: 5px 0;
+    border-radius: 22px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex
+;
+    align-items: center;
+    gap: 10px;
+}
+.toggle-option.active {
+  background: #0066ff;
+  color: white;
+}
+#startAnalysisBtn {
+  width: 100%;
+  padding: 20px 0;
+  margin-top: 15px;
+  border: none;
+  border-radius: 6px;
+  font-size: 100%;
+  background-color: #0066ff;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+#analyzeFacePopup h3{
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+
+
+#analyzeFacePopup .toggle>.slide[data-v-7d4d1855]{flex:0 0 auto;background-color:#fff;border-radius:20px;height:38px;width:70px;border-right:1px solid #B9D3F2;display:inline-flex;align-items:center;transition:all .2s ease-in-out;padding:3px;}
+@media (max-width: 375px){
+  #analyzeFacePopup .toggle>.slide[data-v-7d4d1855]{width:60px;}
+}
+#analyzeFacePopup .toggle>.slide>.ball[data-v-7d4d1855]{width:30px;height:30px;border-radius:15px;background-color:#95bbe8;transition:all .2ss ease-in-out;margin-left:0;margin-right:auto;}
+#analyzeFacePopup .toggle:hover>.slide[data-v-7d4d1855]{border-color:#0160d2;}
+#analyzeFacePopup .toggle.active>.slide[data-v-7d4d1855]{border-color:#0160d2;background-color:#e6effb;}
+#analyzeFacePopup .toggle.active>.slide>.ball[data-v-7d4d1855]{background-color:#0160d2;margin-left:auto;margin-right:0;}
 </style>
 
 
