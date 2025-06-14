@@ -13,6 +13,8 @@
   scrollbar-color: #0160d2 #b9d3f2;   /* плашка скролла и дорожка */ 
 }
 
+.ajax-error { color: #d00; margin-bottom: 15px; text-align: center;}
+
 .fuse-container-header>.publift-container,.fuse-container-content-1>.publift-container,.fuse-container-content-2>.publift-container{max-width:1078px;margin:0 auto;padding:50px 15px;background-color:transparent;}
 @media (max-width: 768px){
 .fuse-container-header>.publift-container,.fuse-container-content-1>.publift-container,.fuse-container-content-2>.publift-container{padding:50px 15px;}

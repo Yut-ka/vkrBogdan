@@ -11,13 +11,61 @@ sign_in_btn.addEventListener("click", () => {
 });
 
 
-$("#search-icon").click(function() {
-  $(".nav").toggleClass("search");
-  $(".nav").toggleClass("no-search");
-  $(".search-input").toggleClass("search-active");
+jQuery("#search-icon").click(function() {
+  jQuery(".nav").toggleClass("search");
+  jQuery(".nav").toggleClass("no-search");
+  jQuery(".search-input").toggleClass("search-active");
 });
 
-$('.menu-toggle').click(function(){
-   $(".nav").toggleClass("mobile-nav");
-   $(this).toggleClass("is-active");
+jQuery('.menu-toggle').click(function(){
+   jQuery(".nav").toggleClass("mobile-nav");
+   jQuery(this).toggleClass("is-active");
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Вход
+  document.querySelector('.sign-in-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    let form = e.target;
+    let data = new FormData(form);
+    let errorDiv = form.querySelector('.ajax-error');
+    errorDiv.style.display = "none";
+    fetch('/ajax_login', {
+      method: 'POST',
+      body: data,
+    })
+    .then(response => response.json())
+    .then(res => {
+      if (res.success) {
+        window.location.href = "/main/";
+      } else {
+        errorDiv.textContent = res.message;
+        errorDiv.style.display = "";
+      }
+    });
+  });
+
+  // Регистрация
+  document.querySelector('.sign-up-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    let form = e.target;
+    let data = new FormData(form);
+    let errorDiv = form.querySelector('.ajax-error');
+    errorDiv.style.display = "none";
+    fetch('/ajax_register', {
+      method: 'POST',
+      body: data,
+    })
+    .then(response => response.json())
+    .then(res => {
+      if (res.success) {
+        window.location.href = "/main/";
+      } else {
+        errorDiv.textContent = res.message;
+        errorDiv.style.display = "";
+      }
+    });
+  });
 });

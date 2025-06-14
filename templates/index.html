@@ -14,7 +14,7 @@
     <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
-          <form action="/login" method="POST" class="sign-in-form">
+          <form action="#" method="POST" class="sign-in-form">
             <h2 class="title">Войти</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
@@ -24,10 +24,11 @@
               <i class="fas fa-lock"></i>
               <input type="password" name="password" placeholder="Пароль" />
             </div>
+            <div class="ajax-error" style="display:none;"></div>
             <input type="submit" value="Войти" class="btn solid" />
             <p class="social-text">Данные для входа комиссии</p>
           </form>
-          <form action="/register" method="POST" class="sign-up-form">
+          <form action="#" method="POST" class="sign-up-form">
             <h2 class="title">Регистрация</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
@@ -35,12 +36,13 @@
             </div>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="email" name="username" placeholder="Email" />
+              <input type="email" name="email" placeholder="Email" />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
               <input type="password" name="password" placeholder="Пароль" />
             </div>
+            <div class="ajax-error" style="display:none;"></div>
             <input type="submit" class="btn" value="Зарегистрироваться" />
             <p class="social-text">Данные для входа комиссии</p>
           </form>
@@ -75,6 +77,7 @@
       </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="{{url_for('static', filename='js/script.js')}}"></script>
   </body>
 </html>

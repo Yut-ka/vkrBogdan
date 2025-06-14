@@ -1,10 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, session, jsonify
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Для сессий
+app.secret_key = 'your_secret_key'
 
-# Пример "базы данных" (замени на нормальную БД)
-users = {}
+users_db = {}
 
 @app.route("/")
 def home():
@@ -12,41 +11,46 @@ def home():
 
 @app.route("/main/")
 def main():
-    # Пример простой авторизации
     if 'username' in session:
         return render_template("main.html", username=session['username'])
     else:
-        return redirect(url_for('home'))
+        return render_template("index.html")
 
-@app.route("/login", methods=["POST"])
-def login():
+@app.route("/ajax_login", methods=["POST"])
+def ajax_login():
     username = request.form.get("username")
     password = request.form.get("password")
-    # Проверяем пользователя
-    if username in users and users[username]['password'] == password:
+    user = users_db.get(username)
+    if user and user['password'] == password:
         session['username'] = username
-        return redirect(url_for('main'))
+        return jsonify(success=True)
     else:
-        flash('Неправильный логин или пароль')
-        return redirect(url_for('home'))
+        return jsonify(success=False, message="Неверный логин или пароль.")
 
-@app.route("/register", methods=["POST"])
-def register():
+@app.route("/ajax_register", methods=["POST"])
+def ajax_register():
     username = request.form.get("username")
     email = request.form.get("email")
     password = request.form.get("password")
-    # Проверяем, не занят ли логин
-    if username in users:
-        flash('Логин уже занят')
-        return redirect(url_for('home'))
-    users[username] = {'email': email, 'password': password}
+    
+    # 1. Проверка уникальности логина
+    if username in users_db:
+        return jsonify(success=False, message="Этот логин уже занят.")
+    
+    # 2. Проверка уникальности email среди всех пользователей
+    for u in users_db.values():
+        if u['email'].lower() == email.lower():
+            return jsonify(success=False, message="Этот email уже используется.")
+
+    # Если все ок, добавляем пользователя
+    users_db[username] = {"email": email, "password": password}
     session['username'] = username
-    return redirect(url_for('main'))
+    return jsonify(success=True)
 
 @app.route("/logout")
 def logout():
     session.pop('username', None)
-    return redirect(url_for('home'))
+    return '', 204  # пустой ответ
 
 if __name__ == "__main__":
     app.run(debug=True)
