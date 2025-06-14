@@ -25,6 +25,11 @@ $('#file-input').on('change', function () {
     const files = this.files;
     if (files.length === 0) return;
 
+    $.ajax({
+        url: '/reset_upload',
+        type: 'POST'
+    });
+
     $('#uploadPopup').fadeIn();
     $('#popupOverlay').fadeIn();
     $('#thumbnailPreview').empty();

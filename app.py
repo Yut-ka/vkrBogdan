@@ -58,15 +58,37 @@ def logout():
 
 UPLOAD_FOLDER = 'static/uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+already_cleared = False
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    global already_cleared
+
+    # Очистка только при первом запросе в сессии
+    if not already_cleared:
+        for filename in os.listdir(UPLOAD_FOLDER):
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            try:
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+            except Exception as e:
+                print(f"Ошибка удаления {file_path}: {e}")
+        already_cleared = True  # больше не очищаем
+
+    # Сохраняем файл
     file = request.files['file']
     if file:
         filename = secure_filename(file.filename)
         file.save(os.path.join(UPLOAD_FOLDER, filename))
         return 'OK', 200
     return 'No file', 400
+
+@app.route('/reset_upload', methods=['POST'])
+def reset_upload():
+    global already_cleared
+    already_cleared = False
+    return 'reset', 200
 
 
 @app.route('/results')
