@@ -23,7 +23,6 @@ jQuery('.menu-toggle').click(function(){
 });
 
 
-
 document.addEventListener('DOMContentLoaded', function () {
   // Вход
   document.querySelector('.sign-in-form').addEventListener('submit', function (e) {

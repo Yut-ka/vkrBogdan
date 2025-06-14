@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, session, jsonify
+from werkzeug.utils import secure_filename
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -51,6 +53,19 @@ def ajax_register():
 def logout():
     session.pop('username', None)
     return '', 204  # пустой ответ
+
+
+UPLOAD_FOLDER = 'static/uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    file = request.files['file']
+    if file:
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        return 'OK', 200
+    return 'No file', 400
 
 if __name__ == "__main__":
     app.run(debug=True)
