@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, session, jsonify
 from werkzeug.utils import secure_filename
 import os
-from deepface import DeepFace
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -101,6 +100,7 @@ def results():
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
+    from deepface import DeepFace
     chosen_filename = request.json.get('chosen')
     if not chosen_filename:
         return jsonify({'error': 'No chosen image provided'}), 400
@@ -153,4 +153,5 @@ def analyze():
     return jsonify({'results': results})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
