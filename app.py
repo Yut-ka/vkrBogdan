@@ -12,6 +12,22 @@ users_db = {}
 def home():
     return render_template("index.html")
 
+@app.route("/faq/")
+def faq():
+    return render_template("faq.html")
+
+@app.route("/contact-form/")
+def contacts():
+    return render_template("contacts.html")
+
+@app.route("/opt-out-request-form/")
+def opt():
+    return render_template("opt.html")
+
+@app.route("/blog/")
+def blog():
+    return render_template("blog.html")
+
 @app.route("/main/")
 def main():
     if 'username' in session:

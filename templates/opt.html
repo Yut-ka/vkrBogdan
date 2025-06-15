@@ -6,7 +6,8 @@
     <title>ВКР - сервис "Родные"</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/popups.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/results.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contacts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/faq.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -49,129 +50,156 @@
 
   <div id="content">
     <div id="hero-section">
-        <div class="container" style="display: block;">
-            <main class="results-section">
-                <div class="results-header">
-                    <img src="{{ url_for('static', filename='uploads/' + chosen) }}" class="main-face" />
-                    <div class="result-info">
-                    <h2>Показаны результаты анализа {{ photos|length }} фотографий лица</h2>
-                    <p>Также вы можете сделать снимок с помощью камеры устройства. Не волнуйтесь, мы ничего не сохраняем!</p>
-                    </div>
-                </div>
-                <!-- Заглушка -->
-                <div id="analysisStatus" style="text-align: center; padding: 50px;">
-                <svg width="60" height="60" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="35" stroke="#0074dd" stroke-width="10" fill="none" stroke-linecap="round"
-                            stroke-dasharray="180"
-                            stroke-dashoffset="0">
-                    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50"
-                                        dur="1s" repeatCount="indefinite"/>
-                    </circle>
-                </svg>
-                <p style="font-size: 18px; margin-top: 10px;">Идет анализ...</p>
-                </div>
-
-                <!-- Сетка с результатами -->
-                <div class="photo-grid" id="resultGrid"></div>
-
-                <!-- JSON вывод -->
-                <pre id="jsonOutput" style="margin-top: 40px; background:#f4f4f4; padding: 10px; border-radius: 6px; font-size: 13px; line-height: 1.4; max-height: 400px; overflow-y: auto; display:none;"></pre>
-
-                <p class="end-marker">конец результатов</p>
-            </main>
+        <div class="container">
+            <div class="left-side">
+                <h1>Форма запроса Opt-Out</h1>
+                <p>Пожалуйста, используйте эту форму, чтобы воспользоваться своим правом на удаление всех ваших данных из нашей системы.</p>
+            </div>
+            <div class="right-side"><img style="min-height: auto;" draggable="false" src="{{ url_for('static', filename='images/opt-out-24455fca.png') }}" alt="Face search engine" width="426" height="203" /></div>
         </div>
     </div>
+    
+
+
+
+    <div class="contact-section">
+        <div data-v-2ffe0fd4="" class="container from-faq">
+            <!---->
+            <div data-v-2ffe0fd4="" class="headline"><svg data-v-2ffe0fd4="" aria-hidden="true" class="vue-icon"
+                    draggable="false" on="[object Object]">
+                    <use href="#icon-conversation" fill="null"></use>
+                </svg>
+                <h1 data-v-2ffe0fd4="">Форма для запроса на удаление</h1>
+            </div>
+            <div data-v-2ffe0fd4="" class="faq-notice">
+                <p data-v-2ffe0fd4="">Пожалуйста, опишите впечталтения от сервиса</p>
+            </div>
+            <!---->
+            <div data-v-2ffe0fd4="" class="messages" style="display: none;">
+                <!---->
+            </div>
+            <div data-v-21780a35="" data-v-2ffe0fd4="" class="container">
+                <div data-v-21780a35="" class="from-faq form">
+                    <div data-v-21780a35="" auto-rotate="true" style="display: none;"><input id="file-input"
+                            class="fileinput" type="file" accept="image/*," multiple=""><label data-v-21780a35=""
+                            id="upload-label" for="file-input"></label></div>
+                    <div data-v-21780a35="" class="form-group"><label data-v-21780a35="" for="email">Электронная
+                            почта</label><input data-v-21780a35="" id="email" type="email">
+                        <!---->
+                    </div>
+                    <div data-v-21780a35="" class="textarea-with-buttons">
+                        <div data-v-21780a35="" class="form-group"><label data-v-21780a35="">Сообщение (минимум 20
+                                символов)</label><textarea data-v-21780a35="" id="message"></textarea>
+                            <!---->
+                            <!---->
+                            <!---->
+                        </div>
+                        <div data-v-21780a35="" class="actions"><button data-v-21780a35="" class="disabled send"><span
+                                    data-v-21780a35="">Отправить сообщение</span>
+                                <!----></button><button data-v-21780a35="" class="select-file"><svg data-v-21780a35=""
+                                    aria-hidden="true" class="vue-icon" draggable="false" on="[object Object]">
+                                    <use href="#icon-attachment" fill="null"></use>
+                                </svg><span data-v-21780a35="">Прикрепить файлы</span></button></div>
+                        <!---->
+                    </div>
+                </div>
+                <div data-v-21780a35="" id="turnstile-wrapper"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup -->
+    <div id="popup-success" class="popup-success">
+        <div class="popup-content">
+            <div class="popup-icon">
+            <svg viewBox="0 0 52 52">
+                <circle class="circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="check" fill="none" d="M14 27l7 7 16-16"/>
+            </svg>
+            </div>
+            <h3>Сообщение отправлено</h3>
+            <p>
+            Мы получили ваше сообщение. Мы ответим на него как можно скорее.<br>
+            Вы хотите найти ответ до того, как мы ответим на ваше сообщение?
+            Ознакомьтесь с <a href="/faq">часто задаваемыми вопросами в Центре поддержки</a>.
+            </p>
+            <button id="popup-close">Закрыть</button>
+        </div>
+    </div>
+
+
+
+    <div data-v-553ac643="" data-v-19929b35="" class="support-center-banner">
+        <div data-v-553ac643="" class="container">
+            <div data-v-553ac643="" class="text">
+                <h3 data-v-553ac643="">Остались вопросы?</h3>
+                <p data-v-553ac643="">Пожалуйста, обращайтесь в Центр поддержки. Наш агент обычно отвечает в течение 1
+                    рабочего дня. Зарегистрированные пользователи могут найти чат поддержки в своей панели управления.</p><a
+                    data-v-553ac643="" href="/contact-form"><span data-v-553ac643="">Свяжитесь с нашей службой
+                        поддержки</span><svg data-v-553ac643="" aria-hidden="true" class="vue-icon" draggable="false"
+                        on="[object Object]">
+                        <use href="#icon-white-forward-arrow" fill="null"></use>
+                    </svg></a>
+            </div>
+            <div data-v-553ac643="" class="illustration"><img data-v-553ac643=""
+                    src="{{ url_for('static', filename='images/support-center-banner-f03d1cc3.svg') }}" alt="Support Center" width="426" height="203">
+            </div>
+        </div>
+    </div>
+
+
+    <div id="useful-links">
+      <div class="container">
+        <a href="/main" title="Search"><svg class="icon notranslate" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.3333 28C22.3289 28 28 22.3289 28 15.3333C28 8.33769 22.3289 2.66663 15.3333 2.66663C8.33773 2.66663 2.66667 8.33769 2.66667 15.3333C2.66667 22.3289 8.33773 28 15.3333 28Z"></path>
+            <path d="M28.4 29.3334C28.16 29.3334 27.92 29.24 27.7467 29.0667L25.2667 26.5867C24.9067 26.2267 24.9067 25.64 25.2667 25.2667C25.6267 24.9067 26.2133 24.9067 26.5867 25.2667L29.0667 27.7467C29.4267 28.1067 29.4267 28.6934 29.0667 29.0667C28.88 29.24 28.64 29.3334 28.4 29.3334Z"></path>
+          </svg>
+          <span>Поиск</span></a><a href="/blog" title="Blog"><svg class="icon notranslate" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21.5867 2.66663H10.4133C5.56 2.66663 2.66667 5.55996 2.66667 10.4133V21.5733C2.66667 26.44 5.56 29.3333 10.4133 29.3333H21.5733C26.4267 29.3333 29.32 26.44 29.32 21.5866V10.4133C29.3333 5.55996 26.44 2.66663 21.5867 2.66663ZM14.6 23.3466C14.2133 23.7333 13.48 24.1066 12.9467 24.1866L9.66667 24.6533C9.54667 24.6666 9.42667 24.68 9.30667 24.68C8.76 24.68 8.25333 24.4933 7.89333 24.1333C7.45333 23.6933 7.26667 23.0533 7.37333 22.3466L7.84 19.0666C7.92 18.52 8.28 17.8 8.68 17.4133L14.6267 11.4666C14.7333 11.7466 14.84 12.0266 14.9867 12.3466C15.12 12.6266 15.2667 12.92 15.4267 13.1866C15.56 13.4133 15.7067 13.6266 15.8267 13.7866C15.9733 14.0133 16.1467 14.2266 16.2533 14.3466C16.32 14.44 16.3733 14.5066 16.4 14.5333C16.7333 14.9333 17.12 15.3066 17.4533 15.5866C17.5467 15.68 17.6 15.7333 17.6267 15.7466C17.8267 15.9066 18.0267 16.0666 18.2 16.1866C18.4133 16.3466 18.6267 16.4933 18.8533 16.6133C19.12 16.7733 19.4133 16.92 19.7067 17.0666C20.0133 17.2 20.2933 17.32 20.5733 17.4133L14.6 23.3466ZM23.16 14.7866L21.9333 16.0266C21.8533 16.1066 21.7467 16.1466 21.64 16.1466C21.6 16.1466 21.5467 16.1466 21.52 16.1333C18.8133 15.36 16.6533 13.2 15.88 10.4933C15.84 10.3466 15.88 10.1866 15.9867 10.0933L17.2267 8.85329C19.2533 6.82663 21.1867 6.86663 23.1733 8.85329C24.1867 9.86663 24.68 10.84 24.68 11.8533C24.6667 12.8133 24.1733 13.7733 23.16 14.7866Z"></path>
+          </svg>
+          <span>Блог</span></a><a href="/faq" title="FAQ"><svg class="icon notranslate" width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23.1667 3.23999H9.83333C5.83333 3.23999 3.16667 5.90666 3.16667 9.90666V17.9067C3.16667 21.9067 5.83333 24.5733 9.83333 24.5733V27.4133C9.83333 28.48 11.02 29.12 11.9 28.52L17.8333 24.5733H23.1667C27.1667 24.5733 29.8333 21.9067 29.8333 17.9067V9.90666C29.8333 5.90666 27.1667 3.23999 23.1667 3.23999ZM16.5 19.4667C15.94 19.4667 15.5 19.0133 15.5 18.4667C15.5 17.92 15.94 17.4667 16.5 17.4667C17.06 17.4667 17.5 17.92 17.5 18.4667C17.5 19.0133 17.06 19.4667 16.5 19.4667ZM18.18 13.9333C17.66 14.28 17.5 14.5067 17.5 14.88V15.16C17.5 15.7067 17.0467 16.16 16.5 16.16C15.9533 16.16 15.5 15.7067 15.5 15.16V14.88C15.5 13.3333 16.6333 12.5733 17.06 12.28C17.5533 11.9467 17.7133 11.72 17.7133 11.3733C17.7133 10.7067 17.1667 10.16 16.5 10.16C15.8333 10.16 15.2867 10.7067 15.2867 11.3733C15.2867 11.92 14.8333 12.3733 14.2867 12.3733C13.74 12.3733 13.2867 11.92 13.2867 11.3733C13.2867 9.59999 14.7267 8.15999 16.5 8.15999C18.2733 8.15999 19.7133 9.59999 19.7133 11.3733C19.7133 12.8933 18.5933 13.6533 18.18 13.9333Z"></path>
+          </svg>
+          <span>FAQ</span></a>
+      </div>
+    </div>
+
+
+
   </div>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const chosen = new URLSearchParams(window.location.search).get("chosen");
-    if (!chosen) return;
-
-    fetch("/analyze", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chosen })
-    })
-    .then(res => res.json())
-    .then(data => {
-      const results = data.results || [];
-      console.log(data.results.length);
-      console.log(data.results);
-
-      // Показываем JSON
-      const jsonPre = document.getElementById("jsonOutput");
-      jsonPre.style.display = "block";
-      jsonPre.textContent = JSON.stringify(data, null, 2);
-
-      // Скрываем заглушку
-      document.getElementById("analysisStatus").style.display = "none";
-
-      // Отрисовываем сетку
-      const grid = document.getElementById("resultGrid");
-
-      results.forEach(photo => {
-        if (photo.error) return;
-
-        const div = document.createElement("div");
-        div.className = "photo-card";
-
-        // Определяем пол по наибольшему значению
-        const genderObj = photo.gender || {};
-        const genderKey = Object.keys(genderObj).reduce((a, b) =>
-            genderObj[a] > genderObj[b] ? a : b
-        );
-        const isMale = genderKey.toLowerCase() === "man";
-        const isFemale = genderKey.toLowerCase() === "woman";
-
-        // Устанавливаем фон карточки по полу
-        div.style.background = isMale ? "#e0f0ff" : isFemale ? "#ffe0f0" : "#f4f4f4";
-
-        const img = document.createElement("img");
-        img.src = `/static/uploads/${photo.filename}`;
-
-        const labels = document.createElement("div");
-        labels.className = "label-container";
-
-        const prob = document.createElement("span");
-        prob.className = "probability";
-        prob.textContent = `${photo.similarity + 40}%`;
-
-        const genderAge = document.createElement("span");
-        genderAge.className = "gender age";
-        genderAge.textContent = (isMale ? "М" : isFemale ? "Ж" : "—") + ` ${photo.age}`;
-        if( photo.filename =="5330080287675249019.jpg"){
-          genderAge.textContent = `Ж 75`;
-          div.style.background = "#ffe0f0";
-        }
-
-        const race = document.createElement("span");
-        race.className = "ethnicity";
-        race.textContent = translateRace(photo.dominant_race);
-
-        labels.append(prob, genderAge, race);
-        div.append(img, labels);
-        grid.appendChild(div);
-      });
-    });
-
-    function translateRace(race) {
-      const map = {
-        "white": "европеоидная",
-        "black": "негроидная",
-        "asian": "азиатская",
-        "indian": "индоарийская",
-        "middle eastern": "ближневосточная",
-        "latino hispanic": "латиноамериканская"
-      };
-      return map[race.toLowerCase()] || race;
-    }
-  });
-</script>
-
 
 
   </div>
+  
+
+  <script>
+        $(document).ready(function () {
+            $('.actions .send').on('click', function (e) {
+                e.preventDefault();
+
+                // Сброс формы
+                $('#email').val('');
+                $('#subject').val('');
+                $('#message').val('');
+                $('#file-input').val('');
+
+                // Показ popup
+                $('#popup-success').fadeIn();
+
+                // Автозакрытие через 5 секунд
+                /*
+                setTimeout(() => {
+                $('#popup-success').fadeOut();
+                }, 5000);*/
+            });
+
+            // Закрытие вручную
+            $('#popup-close').on('click', function () {
+                $('#popup-success').fadeOut();
+            });
+        });
+    </script>
   <script src="{{url_for('static', filename='js/main.js')}}"></script>
 
 

@@ -156,3 +156,18 @@ $('#startAnalysisBtn').on('click', function () {
 $('.toggle-option').on('click', function () {
   $(this).toggleClass('active');
 });
+
+$(".my-account-btn button.auth").click(function(){
+  window.location.href = '/';
+})
+
+$(document).ready(function () {
+  const currentPath = window.location.pathname.slice(0, -1);
+  $('#main-header nav a').each(function () {
+    const linkPath = $(this).attr('href');
+    if (linkPath === currentPath) {
+      $('#main-header nav a').removeClass('active'); // снять класс у других
+      $(this).addClass('active');       // добавить активному
+    }
+  });
+});
